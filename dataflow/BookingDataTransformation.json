@@ -16,6 +16,9 @@
 			"transformations": [
 				{
 					"name": "DataQualityCheck"
+				},
+				{
+					"name": "DerivedColumns"
 				}
 			],
 			"scriptLines": [
@@ -39,7 +42,22 @@
 				"     format: 'document',",
 				"     systemColumns: false) ~> BookingData",
 				"BookingData split(check_out_date<check_in_date,",
-				"     disjoint: false) ~> DataQualityCheck@(BadRecords, AcceptedRecords)"
+				"     disjoint: false) ~> DataQualityCheck@(BadRecords, AcceptedRecords)",
+				"DataQualityCheck@AcceptedRecords derive(stay_duration = (toTimestamp(check_out_date) - toTimestamp(check_in_date)) / 86400000,",
+				"          booking_year = year(booking_date),",
+				"          booking_month = month(booking_date),",
+				"          full_address = concat(property_location.city,property_location.country),",
+				"          city = property_location.city,",
+				"          country = property_location.country,",
+				"          booking_id = booking_id,",
+				"          booking_date = booking_date,",
+				"          check_out_date = check_out_date,",
+				"          customer_id = customer_id,",
+				"          timestamp = timestamp,",
+				"          owner_id = owner_id,",
+				"          check_in_date = check_in_date,",
+				"          property_id = property_id,",
+				"          amount = amount) ~> DerivedColumns"
 			]
 		}
 	}
