@@ -1,0 +1,17 @@
+{
+	"name": "SynapseDWHNew",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDW",
+		"typeProperties": {
+			"server": "py-synapse-dws.sql.azuresynapse.net",
+			"database": "airbnb_dwh",
+			"encrypt": "mandatory",
+			"trustServerCertificate": true,
+			"authenticationType": "SQL",
+			"userName": "sqladmin",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDE1QzIwRTQxLUVEQjAtNDRCNC05NEM0LTNERDNCRTFBNjA0N19lZmMxZDFkYS1hYmI1LTQ5NGEtOTM1Zi02Zjc0NDk1Mjg1NzgiDQp9"
+		}
+	}
+}
