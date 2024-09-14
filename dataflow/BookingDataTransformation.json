@@ -29,6 +29,9 @@
 				},
 				{
 					"name": "lookupInSynapse"
+				},
+				{
+					"name": "AlterRowForUpdate"
 				}
 			],
 			"scriptLines": [
@@ -96,7 +99,9 @@
 				"     multiple: false,",
 				"     pickup: 'first',",
 				"     desc(SynapseForLookup@timestamp, true),",
-				"     broadcast: 'auto')~> lookupInSynapse"
+				"     broadcast: 'auto')~> lookupInSynapse",
+				"lookupInSynapse alterRow(insertIf(isNull(SynapseForLookup@booking_id)),",
+				"     updateIf(not(isNull(SynapseForLookup@booking_id)))) ~> AlterRowForUpdate"
 			]
 		}
 	}
