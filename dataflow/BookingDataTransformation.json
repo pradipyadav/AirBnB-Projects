@@ -19,13 +19,26 @@
 				}
 			],
 			"scriptLines": [
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          check_out_date as date,",
+				"          customer_id as short,",
+				"          timestamp as timestamp,",
+				"          owner_id as string,",
+				"          check_in_date as date,",
+				"          property_id as string,",
+				"          amount as double,",
+				"          booking_id as string,",
+				"          currency as string,",
+				"          property_location as (city as string, country as string),",
+				"          booking_date as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     enableChangeFeed: true,",
 				"     changeFeedStartFromTheBeginning: true,",
 				"     format: 'document',",
 				"     systemColumns: false) ~> BookingData",
-				"BookingData split(ERROR_FUNCTION(''),",
+				"BookingData split(check_out_date<check_in_date,",
 				"     disjoint: false) ~> DataQualityCheck@(BadRecords, AcceptedRecords)"
 			]
 		}
