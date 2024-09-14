@@ -30,8 +30,52 @@
 						"type": "DelimitedTextReadSettings"
 					}
 				}
+			},
+			{
+				"name": "IterateListedFiles",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "GetCustomFilesMetadata",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('GetCustomFilesMetadata').output.childItems",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Set variable1",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "EachFile",
+								"value": {
+									"value": "@item().name",
+									"type": "Expression"
+								}
+							}
+						}
+					]
+				}
 			}
 		],
+		"variables": {
+			"EachFile": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }
