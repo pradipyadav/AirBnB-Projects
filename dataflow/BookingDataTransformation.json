@@ -13,13 +13,20 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "DataQualityCheck"
+				}
+			],
 			"scriptLines": [
 				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     enableChangeFeed: true,",
-				"     changeFeedStartFromTheBeginning: false,",
-				"     format: 'document') ~> BookingData"
+				"     changeFeedStartFromTheBeginning: true,",
+				"     format: 'document',",
+				"     systemColumns: false) ~> BookingData",
+				"BookingData split(ERROR_FUNCTION(''),",
+				"     disjoint: false) ~> DataQualityCheck@(BadRecords, AcceptedRecords)"
 			]
 		}
 	}
